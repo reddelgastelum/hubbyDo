@@ -4,34 +4,52 @@ block title
   title hubbyDo
 
 block content
-  form(method='post', action='/todos')
-    h2.form-signin-heading New ToDo
-    label.sr-only(for='task') Task
-    input#inputEmail.form-control(type='text', name='title' placeholder='Task', required='', autofocus='')
-    br 
-    input#datepicker(type='text', name='dueDate' placeholder='Due date')
-    br
-    br
-    label.sr-only(for='inputPassword') Details
-    textarea#comment.form-control(rows='5', name='details' placeholder='Details')
-    br
-    button.btn.btn-lg.btn-primary(type='submit') Submit
-    br
-    br
-    table.table.table-hover
-      thead
-        tr
-          th Task
-          th Due Date
-          th Details
-          th Actions
-        tbody
-          each todo in todos
+  != messages('flash', locals)
+  .container
+    // Trigger the modal with a button
+    button.btn.btn-success(type='button', data-toggle='modal', data-target='#myModal') New Task
+    // Modal
+    #myModal.modal.fade(role='dialog')
+      .modal-dialog
+        // Modal content
+        .modal-content
+          .modal-header
+            button.close(type='button', data-dismiss='modal') ×
+            h4.modal-title New Task
+          .modal-body
+            form(method='post', action='/todos')
+              label.sr-only(for='task') Task
+              input#inputEmail.form-control(type='text', name='title' placeholder='Task', required='', autofocus='')
+              br 
+              input#datepicker(type='text', name='dueDate' placeholder='Due date')
+              br
+              br
+              label.sr-only(for='inputPassword') Details
+              textarea#comment.form-control(rows='5', name='details' placeholder='Details')
+              br
+              button.btn.btn-success(type='submit') Submit
+              br
+              br
+          .modal-footer
+            button.btn.btn-default(type='button', data-dismiss='modal') Close
+    #task-table
+      if todos.length
+        table.table.table-hover.table-bordered
+          thead
             tr
-              td= todo.title
-              td= todo.date
-              td= todo.details
-              td
-                a(href="/todos/delete/"+todo._id) Delete
-  
+              th Task
+              th Due Date
+              th Details
+              th Actions
+            tbody
+              each todo in todos
+                tr
+                  td= todo.title
+                  td= todo.date
+                  td= todo.details
+                  td
+                    a(href="/todos/delete/"+todo._id) Delete
+      else
+        h3 You're all done!
+    
   
