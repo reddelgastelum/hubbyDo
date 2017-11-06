@@ -1,6 +1,12 @@
 var router = require('express').Router();
 var mongoose = require('mongoose');
+var Nexmo = require('nexmo');
 var Todo = require('../models/todo');
+
+var nexmo = new Nexmo({
+  apiKey: process.env.NEXMO_API_KEY,
+  apiSecret: process.env.NEXMO_API_SECRET
+});
 
 // Todos
 router.get('/', function(req, res) {
@@ -31,6 +37,17 @@ router.post('/', function(req, res) {
 
 
   todo.save(function() {
+
+    nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title+' ',
+      (err, responseData) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.dir(responseData);
+        }
+      }
+   );
+
     res.redirect('/todos');
   });
 });
