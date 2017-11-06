@@ -8,6 +8,9 @@ require('dotenv').config();
 
 var app = express();
 
+// Port
+var port = process.env.PORT || 8080;
+
 // Mongoose
 mongoose.connect(process.env.DATABASE_URI);
 var db = mongoose.connection;
@@ -30,6 +33,6 @@ app.set('view engine', 'pug');
 // Todos route
 app.use('/todos', require('./app/routes/todos'));
 
-app.listen(process.env.PORT, function() {
-  console.log('Listening on port ' + process.env.PORT);
+app.listen(port, function() {
+  console.log('Listening on port ' + port);
 });
