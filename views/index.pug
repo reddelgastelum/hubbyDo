@@ -1,0 +1,37 @@
+extends layout.pug
+
+block title
+  title hubbyDo
+
+block content
+  form(method='post', action='/todos')
+    h2.form-signin-heading New ToDo
+    label.sr-only(for='task') Task
+    input#inputEmail.form-control(type='text', name='title' placeholder='Task', required='', autofocus='')
+    br 
+    input#datepicker(type='text', name='dueDate' placeholder='Due date')
+    br
+    br
+    label.sr-only(for='inputPassword') Details
+    textarea#comment.form-control(rows='5', name='details' placeholder='Details')
+    br
+    button.btn.btn-lg.btn-primary(type='submit') Submit
+    br
+    br
+    table.table.table-hover
+      thead
+        tr
+          th Task
+          th Due Date
+          th Details
+          th Actions
+        tbody
+          each todo in todos
+            tr
+              td= todo.title
+              td= todo.date
+              td= todo.details
+              td
+                a(href="/todos/delete/"+todo._id) Delete
+  
+  
