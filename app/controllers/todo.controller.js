@@ -34,15 +34,15 @@ module.exports = {
 
     todo.save(function() {
       // Send Text Message
-      // nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title+' ',
-      //   (err, responseData) => {
-      //     if (err) {
-      //       console.log(err);
-      //     } else {
-      //       console.dir(responseData);
-      //     }
-      //   }
-      // );
+      nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title+' ',
+        (err, responseData) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.dir(responseData);
+          }
+        }
+      );
       req.flash('success', 'New task created!');
       res.redirect('/todos');
     });
