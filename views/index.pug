@@ -7,7 +7,7 @@ block content
   != messages('flash', locals)
   .container
     // Trigger the modal with a button
-    button.btn.btn-success(type='button', data-toggle='modal', data-target='#myModal') New Task
+    a.btn.btn-success(type='button', data-toggle='modal', data-target='#myModal') New Task
     // Modal
     #myModal.modal.fade(role='dialog')
       .modal-dialog
@@ -21,7 +21,7 @@ block content
               label.sr-only(for='task') Task
               input#inputEmail.form-control(type='text', name='title' placeholder='Task', required='', autofocus='')
               br 
-              input#datepicker(type='text', name='dueDate' placeholder='Due date')
+              input.datepicker(type='text', name='dueDate' placeholder='Due date')
               br
               br
               label.sr-only(for='inputPassword') Details
@@ -42,13 +42,40 @@ block content
               th Details
               th Actions
             tbody
-              each todo in todos
+              each todo, index in todos
                 tr
                   td= todo.title
                   td= todo.date
                   td= todo.details
                   td
                     a(href="/todos/delete/"+todo._id) Delete
+                    br
+                    // Trigger the modal with a button
+                    a(href="#" type='button', data-toggle='modal', data-target='#myModal'+index) Edit
+                    // Modal
+                    div(id="myModal"+index class="modal fade" role="dialog")
+                      .modal-dialog
+                        // Modal content
+                        .modal-content
+                          .modal-header
+                            button.close(type='button', data-dismiss='modal') ×
+                            h4.modal-title New Task
+                          .modal-body
+                            form(method='post', action='/todos/update/'+todo._id)
+                              label.sr-only(for='task') Task
+                              input#inputEmail.form-control(type='text', name='title', placeholder='Task', required='', autofocus='', value=''+todo.title)
+                              br 
+                              input.datepicker(type='text', name='dueDate', placeholder='Due date' value=''+todo.date)
+                              br
+                              br
+                              label.sr-only(for='inputPassword') Details
+                              textarea#comment.form-control(rows='5', name='details', placeholder='Details')= todo.details
+                              br
+                              button.btn.btn-success(type='submit') Submit
+                              br
+                              br
+                          .modal-footer
+                            button.btn.btn-default(type='button', data-dismiss='modal') Close
       else
         h3 You're all done!
     

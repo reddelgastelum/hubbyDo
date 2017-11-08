@@ -60,7 +60,7 @@ module.exports = {
       todo.details = req.body.details;
 
       todo.save(function() {
-        nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title,
+        nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title + ' was updated.',
 	  (err, responseData) => {
 	    if (err) {
 	      console.log(err);
@@ -68,7 +68,7 @@ module.exports = {
 	      console.dir(responseData);
 	    }
 	  }
-	);	
+	);
         req.flash('success', 'Task has been updated!');
 	res.redirect('/todos');
       });
