@@ -52,5 +52,26 @@ module.exports = {
       req.flash('success', 'Task has been deleted!');
       res.redirect('/todos');
     });
+  },
+  updateTodo: function(req, res) {
+    Todo.findOne({_id:req.params.id}, function(err, todo) {
+      todo.title = req.body.title;
+      todo.dueDate = new Date(req.body.dueDate);
+      todo.details = req.body.details;
+
+      todo.save(function() {
+        nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title,
+	  (err, responseData) => {
+	    if (err) {
+	      console.log(err);
+	    } else {
+	      console.dir(responseData);
+	    }
+	  }
+	);	
+        req.flash('success', 'Task has been updated!');
+	res.redirect('/todos');
+      });
+    });
   }
 }
