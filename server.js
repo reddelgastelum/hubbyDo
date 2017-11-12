@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // Views
-app.set('views', './views');
+app.set('views', './app/views');
 app.set('view engine', 'pug');
 
 // Sessions
