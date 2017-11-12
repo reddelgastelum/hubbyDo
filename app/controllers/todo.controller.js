@@ -34,7 +34,7 @@ module.exports = {
 
     todo.save(function() {
       // Send Text Message
-      nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title+' ',
+      nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, process.env.PHONE_NUMBER, req.body.title+' ',
         (err, responseData) => {
           if (err) {
             console.log(err);
@@ -60,7 +60,7 @@ module.exports = {
       todo.details = req.body.details;
 
       todo.save(function() {
-        nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, '16266026587', req.body.title + ' was updated.',
+        nexmo.message.sendSms(process.env.VIRTUAL_NUMBER, process.env.PHONE_NUMBER, req.body.title + ' was updated.',
 	  (err, responseData) => {
 	    if (err) {
 	      console.log(err);
